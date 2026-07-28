@@ -1,0 +1,5 @@
+- add
+  - choose style
+- delete
+- undelete
+- show / hide deleted

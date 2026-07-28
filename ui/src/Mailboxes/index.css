@@ -1,0 +1,47 @@
+.mailboxes {
+  font-size: 12pt;
+
+  .arrowPair {
+    margin-inline-start: 1em;
+  }
+
+  .active {
+    color: orange;
+  }
+
+  .inactive {
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  tr:nth-child(2n) {
+    color: var(--text-h);
+  }
+
+  tbody tr:hover {
+    color: orange;
+  }
+
+  th,
+  td {
+    text-align: start;
+    padding-inline: 0.6em;
+  }
+
+  .local_part {
+    display: flex;
+    justify-content: space-between;
+
+    .copy {
+      cursor: pointer;
+    }
+  }
+
+  .routes_to {
+    white-space: pre;
+  }
+}
+
+body {
+  padding-bottom: 2em;
+}

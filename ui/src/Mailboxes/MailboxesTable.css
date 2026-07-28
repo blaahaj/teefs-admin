@@ -1,0 +1,13 @@
+/* .copy {
+  opacity: 0;
+} */
+
+/* tr:hover .copy,
+.copy.animating {
+  opacity: initial;
+}
+
+/* Why is this needed? */
+/* .copy.animating {
+  scale: 1;
+} */

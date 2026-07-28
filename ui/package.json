@@ -1,0 +1,26 @@
+{
+  "name": "trying-solid-ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@solidjs/router": "^0.16.2",
+    "better-sqlite3": "^13.0.1",
+    "solid-icons": "^1.2.0",
+    "solid-js": "^1.9.13",
+    "typeorm": "^1.1.0",
+    "ulid": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.13.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vite-plugin-solid": "^2.11.12"
+  }
+}

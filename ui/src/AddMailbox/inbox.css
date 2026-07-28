@@ -1,0 +1,26 @@
+.form {
+  width: fit-content;
+  margin-inline: auto;
+  margin-block: 2em;
+}
+
+.kv {
+  display: flex;
+  flex-direction: row;
+}
+
+.kv > div:first-child {
+  width: 7em;
+}
+
+.kv > div:last-child {
+  width: 20em;
+}
+
+.kv > div {
+  text-align: start;
+}
+
+.kv input[type=text] {
+  width: 100%;
+}

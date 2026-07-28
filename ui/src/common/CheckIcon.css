@@ -1,0 +1,40 @@
+@keyframes anim {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  30% {
+    width: 0.4em;
+    height: 0;
+  }
+  50% {
+    width: 0.4em;
+    height: 0;
+  }
+  100% {
+    width: 0.4em;
+    height: 1.2em;
+  }
+}
+
+.box {
+  position: absolute;
+  top: 0;
+  left: -1em;
+  width: 1.414em;
+  height: 1.414em;
+  transform: rotate(45deg);
+}
+
+.anim {
+  position: absolute;
+  left: 0.5em;
+  bottom: 0;
+  border-bottom: 0.2em solid green;
+  border-right: 0.2em solid green;
+  animation-name: "anim";
+  animation-duration: 0.7s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
