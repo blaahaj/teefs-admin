@@ -2,10 +2,11 @@ import { createResource, createSignal } from "solid-js";
 import "./index.css";
 import { MailboxesTable } from "./MailboxesTable";
 import type { TMailbox } from "../dbTypes";
+import { API_BASE } from "../api";
 
 export function Mailboxes() {
   const [mailboxes, _mailboxActions] = createResource<readonly TMailbox[]>(() =>
-    fetch("/admin/api/mailboxes")
+    fetch(`${API_BASE}/mailboxes`)
       .then((r) => r.json())
       .then((d) => d.mailboxes),
   );

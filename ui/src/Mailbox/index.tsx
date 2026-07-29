@@ -4,6 +4,7 @@ import { isValid } from "ulid";
 
 import { type TMailbox } from "../dbTypes";
 import { CopyButton } from "../common/CopyButton";
+import { API_BASE } from "../api";
 
 export const Mailbox = ({ params }: { params: Params }) => {
   const { id } = params;
@@ -12,7 +13,7 @@ export const Mailbox = ({ params }: { params: Params }) => {
   }
 
   const [mailbox, mailboxActions] = createResource<TMailbox | undefined>(() =>
-    fetch(`/admin/api/mailboxes/${id}`)
+    fetch(`${API_BASE}/mailboxes/${id}`)
       .then((r) => r.json())
       .then((d) => d.mailbox),
   );
@@ -63,7 +64,7 @@ export const Mailbox = ({ params }: { params: Params }) => {
         <button
           on:click={async () => {
             await fetch(
-              `/admin/api/mailboxes/${id}/${mailbox()?.deleted ? "undelete" : "delete"}`,
+              `${API_BASE}/mailboxes/${id}/${mailbox()?.deleted ? "undelete" : "delete"}`,
               { method: "POST" },
             ).then(() => mailboxActions.refetch());
           }}

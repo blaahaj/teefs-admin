@@ -1,6 +1,7 @@
 import { createResource, createSignal } from "solid-js";
 
 import "./inbox.css";
+import { API_BASE } from "../api";
 
 type local_partResponse = {
   readonly six_hex: string;
@@ -11,7 +12,7 @@ export const AddMailbox = () => {
   const [local_partSuggestions, local_partSuggestionsActions] = createResource<
     local_partResponse | undefined
   >(() =>
-    fetch(`/admin/api/random-local-parts`)
+    fetch(`${API_BASE}/random-local-parts`)
       .then((r) => r.json())
       .then((d: local_partResponse) => d),
   );
@@ -99,7 +100,7 @@ export const AddMailbox = () => {
 
       <button
         on:click={() => {
-          fetch(`/admin/api/mailboxes`, {
+          fetch(`${API_BASE}/mailboxes`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
