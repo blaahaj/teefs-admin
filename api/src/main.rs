@@ -2,13 +2,14 @@ mod db;
 mod random_local_parts;
 mod types;
 
-use actix_web::middleware::Logger;
+use actix_web::middleware::{DefaultHeaders, Logger};
 use actix_web::{App, HttpResponse, HttpServer, Responder, get, post, web};
 use env_logger::Env;
 use rusqlite::{self, Error::SqliteFailure, ErrorCode::ConstraintViolation};
 use serde::Serialize;
 
 use std::env;
+use std::env::VarError::{NotPresent, NotUnicode};
 
 use crate::types::{AddMailboxRequest, MailboxResponse, MailboxesResponse};
 
@@ -115,22 +116,31 @@ async fn random_local_parts_handler() -> impl Responder {
     HttpResponse::Ok().json(random_local_parts::generate())
 }
 
+fn required_env_var(name: &str) -> String {
+    match optional_env_var(name) {
+        None => {
+            panic!("Required environment variable {} is missing", name)
+        }
+        Some(s) => s,
+    }
+}
+
+fn optional_env_var(name: &str) -> Option<String> {
+    match env::var(name) {
+        Ok(s) => Some(s),
+        Err(NotPresent) => None,
+        Err(NotUnicode(_)) => panic!(
+            "Environment variable {} is present, but not valid UTF-8",
+            name
+        ),
+    }
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let database_file: String = match env::var("SQLITE_DB_FILE") {
-        Ok(val) => val,
-        Err(e) => panic!("{}: {}", e, "SQLITE_DB_FILE"),
-    };
-
-    let bind_address: &str = match env::var("BIND_ADDRESS") {
-        Ok(val) => &val.to_string(),
-        Err(_) => "127.0.0.1",
-    };
-
-    let port: u16 = match env::var("PORT") {
-        Ok(val) => val.parse::<u16>().unwrap(),
-        Err(e) => panic!("{}: {}", e, "PORT"),
-    };
+    let database_file = required_env_var("SQLITE_DB_FILE");
+    let bind_address = optional_env_var("BIND_ADDRESS").unwrap_or("127.0.0.1".to_string());
+    let port: u16 = required_env_var("PORT").parse::<u16>().unwrap();
 
     let db_data = web::Data::new(database_file);
 
@@ -140,6 +150,10 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Logger::default())
             .wrap(Logger::new("%a %{User-Agent}i"))
+            .wrap(DefaultHeaders::new().add((
+                "Access-Control-Allow-Origin",
+                required_env_var("ACCESS_CONTROL_ALLOW_ORIGIN"),
+            )))
             .app_data(db_data.clone())
             .service(slash_handler)
             .service(ping_handler)
