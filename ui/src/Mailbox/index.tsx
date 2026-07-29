@@ -51,7 +51,7 @@ export const Mailbox = ({ params }: { params: Params }) => {
       {emailAddress() && (
         <div>
           <span>{emailAddress()}</span>
-          <span style={{ "margin-inline-start": "1em" }}>
+          <span>
             <CopyButton text={() => emailAddress()!} />
           </span>
         </div>

@@ -4,19 +4,12 @@ import { CopyIcon } from "./CopyIcon";
 
 import "./CopyButton.css";
 
-export const CopyButton = ({
-  text,
-  style,
-}: {
-  text: Accessor<string>;
-  style?: any;
-}) => {
+export const CopyButton = ({ text }: { text: Accessor<string> }) => {
   const [animating, setAnimating] = createSignal(false);
 
   return (
     <span
       class={`copy ${animating() ? "animating" : ""}`}
-      style={style}
       onClick={() =>
         navigator.clipboard.writeText(text()).then(() => {
           setAnimating(true);

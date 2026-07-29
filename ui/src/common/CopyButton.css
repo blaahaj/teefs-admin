@@ -1,4 +1,6 @@
-/* .copy,
-.animating {
-  opacity: inherit !important;
-} */
+.copy {
+  /* border: 1px solid red; */
+  margin-inline: 0.3em;
+  display: inline-block;
+  width: 2em;
+}

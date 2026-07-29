@@ -18,11 +18,14 @@
 }
 
 .box {
-  position: absolute;
-  top: 0;
-  left: -1em;
-  width: 1.414em;
-  height: 1.414em;
+  position: relative;
+  top: -0.2em;
+  left: -0.3em;
+  display: inline-block;
+  width: 1em;
+  height: 0.9em;
+  /* width: 1.414em; */
+  /* height: 1.414em; */
   transform: rotate(45deg);
 }
 
