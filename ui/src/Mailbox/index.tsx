@@ -65,7 +65,9 @@ export const Mailbox = ({ params }: { params: Params }) => {
           on:click={async () => {
             await fetch(
               `${API_BASE}/mailboxes/${id}/${mailbox()?.deleted ? "undelete" : "delete"}`,
-              { method: "POST" },
+              {
+                method: "POST",
+              },
             ).then(() => mailboxActions.refetch());
           }}
         >

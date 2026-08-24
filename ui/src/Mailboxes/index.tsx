@@ -6,9 +6,12 @@ import { API_BASE } from "../api";
 
 export function Mailboxes() {
   const [mailboxes, _mailboxActions] = createResource<readonly TMailbox[]>(() =>
-    fetch(`${API_BASE}/mailboxes`)
-      .then((r) => r.json())
-      .then((d) => d.mailboxes),
+    fetch(`${API_BASE}/mailboxes`).then((r) => {
+      if (r.status === 403) location.href = "/admin/auth";
+      else if (r.status === 200) {
+        return r.json().then((d) => d.mailboxes);
+      }
+    }),
   );
 
   const [filterText, setFilterText] = createSignal("");

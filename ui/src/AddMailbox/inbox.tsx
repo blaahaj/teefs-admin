@@ -102,6 +102,7 @@ export const AddMailbox = () => {
         on:click={() => {
           fetch(`${API_BASE}/mailboxes`, {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
