@@ -34,3 +34,30 @@ pnpm build
 ```
 
 Then copy `./dist` to wherever it is needed.
+
+## For boop
+
+UNTESTED
+
+```shell
+pushd api
+rsync -av --exclude=target ./ boop.teefs.eu:teefs-admin-api/
+ssh -t boop.teefs.eu 'cd teefs-admin-api && docker build --tag teefs-admin-api .'
+cat <<<'
+    cd teefs-admin-api
+    container=$( docker create teefs-admin-api:latest )
+    docker export $container | tar -xvf- teefs-admin-api
+    docker rm $container
+' | ssh boop.teefs.eu bash
+popd
+
+pushd ui
+pnpm install
+pnpm build
+rsync -av --delete dist/ boop.teefs.eu:teefs-admin-api/dist/
+popd
+```
+
+- `/etc/nginx/teefs-admin-api.service` for the unit file
+- `/etc/nginx/teefs-admin-api.env` for the auth secret
+- Static files are read from `rachel`'s 'teefs-admin-api/dist/` dir
